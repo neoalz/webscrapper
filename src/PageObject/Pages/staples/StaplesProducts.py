@@ -50,9 +50,11 @@ class StaplesProducts:
             price = parent.find_element(By.CLASS_NAME, self.itemPriceClass)
             # url = title.get_attribute("href").removeprefix("https://www.staples.ca/products/")
             sale = None
+            created_at = time.strftime("%Y_%m_%d_%H%M%S", time.gmtime()) #2019_08_24_111757
+            updated_at = time.strftime("%Y_%m_%d_%H%M%S", time.gmtime()) #2019_08_24_111757
             # sku = url[0:url.index('-')]
             # products.append((brand, title.text, pageurl, sku, price.text, sale))
-            products.append((brand, title.text, pageurl, price.text, sale))
+            products.append((brand, title.text, pageurl, price.text, sale, created_at, updated_at))
         return products
 
     # def get_all_products(self, brand):

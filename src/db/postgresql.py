@@ -24,13 +24,15 @@ def close(conn, cur):
 def create_table(name):
     conn, cur = connect()
     query = ''' CREATE TABLE IF NOT EXISTS '''+name+'''(
-                id SERIAL PRIMARY KEY,
+                site_captures_id int,
+                scheduled_works_id int,
                 brand varchar(40) NOT NULL,
                 glosa varchar NOT NULL,
                 url varchar NOT NULL,
-                sku varchar(40) NOT NULL,
                 price varchar(40) NOT NULL,
-                sale varchar(30))'''
+                sale varchar(30),
+                created_at timestamp NOT NULL,
+                updated_at timestamp NOT NULL)'''
     cur.execute(query)
     close(conn, cur)
 
@@ -43,7 +45,7 @@ def insert_values(table_name, values):
     # t.string "price"
     # t.string "sale"
     conn, cur = connect()
-    query = 'INSERT INTO '+table_name+' (brand, glosa, url, price, sale) VALUES (%s, %s, %s, %s, %s)'
+    query = 'INSERT INTO '+table_name+' (brand, glosa, url, price, sale, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)'
     for record in values:
         print(record)
         cur.execute(query, record)

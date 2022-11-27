@@ -4,8 +4,19 @@ from src.PageObject.Pages.staples.StaplesIndex import StaplesIndex
 from src.PageObject.Pages.staples.StaplesProducts import StaplesProducts
 from src.db import postgresql
 
+table_name = "scrapper_results"
+
+
+def insert_to_database(products):
+    postgresql.insert_values(table_name, products)
+
+
+def create_table():
+    postgresql.create_table(table_name)
+
 
 class StaplesWorks:
+
     def __init__(self):
         self.driver = WebDriverSetup()
         self.indexPage = StaplesIndex(self.driver.driver)
@@ -80,18 +91,9 @@ class StaplesWorks:
 
     def get_all_products(self, brand):
         canGoNextPage = True
-        tableName = 'products'
-        self.create_table(tableName)
+        create_table()
         while canGoNextPage:
             self.productsPage.wait_until_load()
             products = self.productsPage.get_values_from_page(brand)
-            self.insert_to_database(products)
+            insert_to_database(products)
             canGoNextPage = self.productsPage.click_next_page()
-
-    def insert_to_database(self, products):
-        postgresql.insert_values("scrapper_results", products)
-        #schema_migrations, site_captures, scrapper_result
-
-
-    def create_table(self, name):
-        postgresql.create_table(name)
