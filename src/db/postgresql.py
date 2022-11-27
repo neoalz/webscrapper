@@ -10,6 +10,11 @@ def connect():
         cur = conn.cursor()
     except Exception as error:
         print(error)
+        if cur is not None:
+            cur.close()
+        if conn is not None:
+            conn.commit()
+            conn.close()
     return conn, cur
 
 
@@ -41,8 +46,9 @@ def insert_values(table_name, values):
     conn, cur = connect()
     query = 'INSERT INTO '+table_name+' (brand, glosa, url, price, sale, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)'
     for record in values:
-        print(record)
+        # print(record)
         cur.execute(query, record)
+        print("PRODUCTS PERSISTED IN ["+table_name+"]...")
     close(conn, cur)
 
 
@@ -71,5 +77,4 @@ def delete_by_name(name):
     conn, cur = connect()
     delete = 'DELETE FROM employee WHERE name = %s'
     cur.execute(delete, name)
-    conn.commit()
     close(conn, cur)

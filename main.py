@@ -11,7 +11,5 @@ if __name__ == '__main__':
     work.get_epson_products()
     work.get_fuzion_products()
     work.get_lexmark_products()
-    # work.present_values()
 
-    # postgresql.connect()
 

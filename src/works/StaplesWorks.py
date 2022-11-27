@@ -91,7 +91,7 @@ class StaplesWorks:
 
     def get_all_products(self, brand):
         canGoNextPage = True
-        create_table()
+        # create_table()
         while canGoNextPage:
             self.productsPage.wait_until_load()
             products = self.productsPage.get_values_from_page(brand)
