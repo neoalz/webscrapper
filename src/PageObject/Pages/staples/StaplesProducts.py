@@ -21,9 +21,6 @@ class StaplesProducts:
         self.closePromptClass = "icon--close"
         self.closePromptXpath = '//*[@id="bold-welcome-modal"]/div/div/header/div/span[2]'
         self.closePromptFullXpath = '/html/body/div[7]/div/div/header/div/span[2]'
-        # self.productsNames = list()
-        # self.productsSKUs = list()
-        # self.productsPrices = list()
         self.modalClosed = False
 
         # scheduled_works: site_captures_id date_time status_scheduled created_at updated_at

@@ -21,49 +21,49 @@ class StaplesWorks:
         print("Going for Lexmark products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_lexmark()
-        self.productsPage.get_all_products()
+        self.get_all_products("LEXMARK")
 
     def get_canon_products(self):
         print("Going for Canon products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_canon()
-        self.productsPage.get_all_products()
+        self.get_all_products("CANON")
 
     def get_samsung_products(self):
         print("Going for Samsung products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_samsung()
-        self.productsPage.get_all_products()
+        self.get_all_products("SAMSUNG")
 
     def get_epson_products(self):
         print("Going for Epson products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_epson()
-        self.productsPage.get_all_products()
+        self.get_all_products("EPSON")
 
     def get_staples_products(self):
         print("Going for Staples products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_staples()
-        self.productsPage.get_all_products()
+        self.get_all_products("STAPLES")
 
     def get_fuzion_products(self):
         print("Going for Fuzion products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_fuzion()
-        self.productsPage.get_all_products()
+        self.get_all_products("FUZION")
 
     def get_xerox_products(self):
         print("Going for Xerox products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_xerox()
-        self.productsPage.get_all_products()
+        self.get_all_products("XEROX")
 
     def get_hp_products(self):
         print("Going for HP products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_hp()
-        self.productsPage.get_all_products()
+        self.get_all_products("HP")
 
     def present_values(self):
         productsNames = self.productsPage.get_products_names()
