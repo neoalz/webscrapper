@@ -38,12 +38,6 @@ def create_table(name):
 
 
 def insert_values(table_name, values):
-    #t.string "brand"
-    # t.text "glosa"
-    # t.text "url"
-    # t.string "sku"
-    # t.string "price"
-    # t.string "sale"
     conn, cur = connect()
     query = 'INSERT INTO '+table_name+' (brand, glosa, url, price, sale, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)'
     for record in values:
@@ -63,8 +57,6 @@ def show_table():
     cur.execute('SELECT * FROM employee')
     for record in cur.fetchall():
         print(record)
-        # print(record[1],record[2]
-        # print(record['name'],record['salary']
     close(conn, cur)
 
 

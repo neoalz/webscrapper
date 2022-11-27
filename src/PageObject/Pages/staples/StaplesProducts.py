@@ -23,10 +23,6 @@ class StaplesProducts:
         self.closePromptFullXpath = '/html/body/div[7]/div/div/header/div/span[2]'
         self.modalClosed = False
 
-        # scheduled_works: site_captures_id date_time status_scheduled created_at updated_at
-        # scrapper_results: site_captures_id sheduled_works_id brand glosa url price sale created_at updated_at scheduled_works_id site_captures_id
-        # site_captures: name description url_site statu_size created_at updated_at
-
     def get_products_names(self):
         return self.productsNames
 
@@ -53,16 +49,8 @@ class StaplesProducts:
             created_at = time.strftime("%Y_%m_%d_%H%M%S", time.gmtime()) #2019_08_24_111757
             updated_at = time.strftime("%Y_%m_%d_%H%M%S", time.gmtime()) #2019_08_24_111757
             # sku = url[0:url.index('-')]
-            # products.append((brand, title.text, pageurl, sku, price.text, sale))
             products.append((brand, title.text, pageurl, price.text, sale, created_at, updated_at))
         return products
-
-    # def get_all_products(self, brand):
-    #     canGoNextPage = True
-    #     while canGoNextPage:
-    #         self.wait_until_load()
-    #         self.get_values_from_page(brand)
-    #         canGoNextPage = self.click_next_page()
 
     def get_next_page(self):
         return self.driver.find_element(By.LINK_TEXT, self.nextPageText)
