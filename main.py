@@ -1,3 +1,4 @@
+from src.db import postgresql
 from src.works.StaplesWorks import StaplesWorks
 
 if __name__ == '__main__':
@@ -11,4 +12,6 @@ if __name__ == '__main__':
     work.get_fuzion_products()
     work.get_lexmark_products()
     work.present_values()
+
+    # postgresql.connect()
 
