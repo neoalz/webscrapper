@@ -2,6 +2,7 @@ import time
 from src.Driver.WebDriverSetup import WebDriverSetup
 from src.PageObject.Pages.staples.StaplesIndex import StaplesIndex
 from src.PageObject.Pages.staples.StaplesProducts import StaplesProducts
+from src.db import postgresql
 
 
 class StaplesWorks:
@@ -14,7 +15,7 @@ class StaplesWorks:
         print("Going for Brother products")
         self.driver.setUp(StaplesIndex.get_base_url())
         self.indexPage.go_brother()
-        self.productsPage.get_all_products()
+        self.get_all_products("BROTHER")
 
     def get_lexmark_products(self):
         print("Going for Lexmark products")
@@ -76,3 +77,19 @@ class StaplesWorks:
             print(productName + productSku + productPrice)
             total = i + 1
         print("Total products captured: " + str(total))
+
+    def get_all_products(self, brand):
+        canGoNextPage = True
+        tableName = 'products'
+        self.create_table(tableName)
+        while canGoNextPage:
+            self.productsPage.wait_until_load()
+            products = self.productsPage.get_values_from_page(brand)
+            self.insert_to_database(products)
+            canGoNextPage = self.productsPage.click_next_page()
+
+    def insert_to_database(self, products):
+        postgresql.insert_values("products", products)
+
+    def create_table(self, name):
+        postgresql.create_table(name)

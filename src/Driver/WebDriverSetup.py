@@ -3,13 +3,13 @@ import platform
 import urllib3
 
 chrome_driver_path_windows = '.\\src\\Driver\\chromedriverwindows.exe'
-chrome_driver_path_linux = './src/Driver/chromedriverlinux'
+chrome_driver_path_linux = './src/Driver/chromedriver'
 
 
 class WebDriverSetup:
     def __init__(self):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        print(platform.system())
+        # print(platform.system())
         if 'Windows' == platform.system():
             self.driver = webdriver.Chrome(executable_path=chrome_driver_path_windows)
         else:

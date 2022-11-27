@@ -1,39 +1,13 @@
-from configparser import ConfigParser
-
 import psycopg2
 
-hostname = ''
-database = ''
-username = ''
-pwd = ''
-port_id = 5432
-
-
-def config(filename='./venv/database.ini', section='postgresql'):
-    parser = ConfigParser()
-    parser.read(filename)
-    db = {}
-    if parser.has_section(section):
-        params = parser.items(section)
-        for param in params:
-            db[param[0]] = param[1]
-    else:
-        raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-    return db
+from src.db.config import config
 
 
 def connect():
     try:
         params = config()
         conn = psycopg2.connect(**params)
-        # conn = psycopg2.connect(
-        #     host=hostname,
-        #     dbname=database,
-        #     user=username,
-        #     password=pwd,
-        #     port=port_id)
         cur = conn.cursor()
-        # print(conn)
     except Exception as error:
         print(error)
     return conn, cur
@@ -47,25 +21,32 @@ def close(conn, cur):
         conn.close()
 
 
-def create_table():
+def create_table(name):
     conn, cur = connect()
-    query = ''' CREATE TABLE IIF NOT EXISTS employee(
-                id int PRIMARY KEY,
-                name varchar(40) NOT NULL,
-                salary int,
-                dept_id varchar(30)) '''
+    query = ''' CREATE TABLE IF NOT EXISTS '''+name+'''(
+                id SERIAL PRIMARY KEY,
+                brand varchar(40) NOT NULL,
+                glosa varchar NOT NULL,
+                url varchar NOT NULL,
+                sku varchar(40) NOT NULL,
+                price varchar(40) NOT NULL,
+                sale varchar(30))'''
     cur.execute(query)
     close(conn, cur)
 
 
-def insert_values(values):
+def insert_values(table_name, values):
+    #t.string "brand"
+    # t.text "glosa"
+    # t.text "url"
+    # t.string "sku"
+    # t.string "price"
+    # t.string "sale"
     conn, cur = connect()
-    query = 'INSERT INTO employee (id, name, salary, dept_id) VALUES (%s, %s, %s, %S)'
-    values = [(1, 'James', 12000, 'D1'), (2, 'James', 12000, 'D2'), (3, 'James', 12000, 'D3'),
-              (4, 'James', 12000, 'D4')]
+    query = 'INSERT INTO '+table_name+' (brand, glosa, url, sku, price, sale) VALUES (%s, %s, %s, %s, %s, %s)'
     for record in values:
+        print(record)
         cur.execute(query, record)
-
     close(conn, cur)
 
 

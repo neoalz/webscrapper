@@ -21,14 +21,14 @@ class StaplesProducts:
         self.closePromptClass = "icon--close"
         self.closePromptXpath = '//*[@id="bold-welcome-modal"]/div/div/header/div/span[2]'
         self.closePromptFullXpath = '/html/body/div[7]/div/div/header/div/span[2]'
-        self.productsNames = list()
-        self.productsSKUs = list()
-        self.productsPrices = list()
+        # self.productsNames = list()
+        # self.productsSKUs = list()
+        # self.productsPrices = list()
         self.modalClosed = False
 
-        #scheduled_works: site_captures_id date_time status_scheduled created_at updated_at
-        #scrapper_results: site_captures_id sheduled_works_id brand glosa url price sale created_at updated_at scheduled_works_id site_captures_id
-        #site_captures: name description url_site statu_size created_at updated_at
+        # scheduled_works: site_captures_id date_time status_scheduled created_at updated_at
+        # scrapper_results: site_captures_id sheduled_works_id brand glosa url price sale created_at updated_at scheduled_works_id site_captures_id
+        # site_captures: name description url_site statu_size created_at updated_at
 
     def get_products_names(self):
         return self.productsNames
@@ -40,29 +40,29 @@ class StaplesProducts:
         return self.productsPrices
 
     def get_items(self):
-        self.wait_presence_by_class(5,self.itemClass)
+        self.wait_presence_by_class(5, self.itemClass)
         return self.driver.find_elements(By.CLASS_NAME, self.itemClass)
 
-
-    def get_values_from_page(self):
+    def get_values_from_page(self, brand):
         parents = self.get_items()
         print("Reading page values...")
+        pageurl = self.driver.current_url
+        products = list()
         for parent in parents:
             title = parent.find_element(By.CLASS_NAME, self.itemTitleClass)
             price = parent.find_element(By.CLASS_NAME, self.itemPriceClass)
-            # print(price.text)
             url = title.get_attribute("href").removeprefix("https://www.staples.ca/products/")
-            self.productsNames.append(title.text)
-            self.productsSKUs.append(url[0:url.index('-')])
-            self.productsPrices.append(price.text)
+            sale = None
+            sku = url[0:url.index('-')]
+            products.append((brand, title.text, pageurl, sku, price.text, sale))
+        return products
 
-    def get_all_products(self):
-        self.get_values_from_page()
-        canGoNextPage = self.click_next_page()
-        while canGoNextPage:
-            self.wait_until_load()
-            self.get_values_from_page()
-            canGoNextPage = self.click_next_page()
+    # def get_all_products(self, brand):
+    #     canGoNextPage = True
+    #     while canGoNextPage:
+    #         self.wait_until_load()
+    #         self.get_values_from_page(brand)
+    #         canGoNextPage = self.click_next_page()
 
     def get_next_page(self):
         return self.driver.find_element(By.LINK_TEXT, self.nextPageText)
@@ -102,7 +102,7 @@ class StaplesProducts:
                 expected_conditions.presence_of_element_located((By.CLASS_NAME, locator))
             )
         except:
-            print("Element "+locator+" Not Found")
+            print("Element " + locator + " Not Found")
 
     def wait_element_clickeable_by_class(self, time, locator):
         try:
@@ -110,7 +110,7 @@ class StaplesProducts:
                 expected_conditions.element_to_be_clickable((By.CLASS_NAME, locator))
             )
         except:
-            print("Element "+locator+" Was Not Clickeable")
+            print("Element " + locator + " Was Not Clickeable")
 
     def wait_element_clickeable_by_class(self, time, locator):
         try:
@@ -118,7 +118,7 @@ class StaplesProducts:
                 expected_conditions.element_to_be_clickable((By.LINK_TEXT, locator))
             )
         except:
-            print("Element "+locator+" Was Not Clickeable")
+            print("Element " + locator + " Was Not Clickeable")
 
     def wait_presence_by_link_text(self, time, locator):
         try:
@@ -126,8 +126,7 @@ class StaplesProducts:
                 expected_conditions.presence_of_element_located((By.LINK_TEXT, locator))
             )
         except:
-            print("Element "+locator+" Not Found")
-
+            print("Element " + locator + " Not Found")
 
     @staticmethod
     def get_base_url():
