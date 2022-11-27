@@ -58,7 +58,7 @@ def create_table():
     close(conn, cur)
 
 
-def insert_values():
+def insert_values(values):
     conn, cur = connect()
     query = 'INSERT INTO employee (id, name, salary, dept_id) VALUES (%s, %s, %s, %S)'
     values = [(1, 'James', 12000, 'D1'), (2, 'James', 12000, 'D2'), (3, 'James', 12000, 'D3'),
