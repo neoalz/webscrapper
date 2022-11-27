@@ -43,7 +43,7 @@ def insert_values(table_name, values):
     # t.string "price"
     # t.string "sale"
     conn, cur = connect()
-    query = 'INSERT INTO '+table_name+' (brand, glosa, url, sku, price, sale) VALUES (%s, %s, %s, %s, %s, %s)'
+    query = 'INSERT INTO '+table_name+' (brand, glosa, url, price, sale) VALUES (%s, %s, %s, %s, %s)'
     for record in values:
         print(record)
         cur.execute(query, record)

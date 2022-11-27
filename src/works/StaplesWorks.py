@@ -89,7 +89,9 @@ class StaplesWorks:
             canGoNextPage = self.productsPage.click_next_page()
 
     def insert_to_database(self, products):
-        postgresql.insert_values("products", products)
+        postgresql.insert_values("scrapper_results", products)
+        #schema_migrations, site_captures, scrapper_result
+
 
     def create_table(self, name):
         postgresql.create_table(name)
