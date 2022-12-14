@@ -21,6 +21,8 @@ class StaplesProducts:
         self.closePromptClass = "icon--close"
         self.closePromptXpath = '//*[@id="bold-welcome-modal"]/div/div/header/div/span[2]'
         self.closePromptFullXpath = '/html/body/div[7]/div/div/header/div/span[2]'
+        #self.originalPriceContainerClass = 'top-product'
+        #self.originalPriceTagName = 'strike'
         self.modalClosed = False
 
     def get_products_names(self):

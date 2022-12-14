@@ -3,7 +3,7 @@ import platform
 import urllib3
 
 chrome_driver_path_windows = '.\\src\\Driver\\chromedriverwindows.exe'
-chrome_driver_path_linux = './src/Driver/chromedriver'
+chrome_driver_path_linux = './src/Driver/chromedriverlinux'
 
 
 class WebDriverSetup:
