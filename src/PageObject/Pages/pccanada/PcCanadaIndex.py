@@ -5,47 +5,33 @@ from selenium.webdriver.support import expected_conditions
 
 base_url = "https://www.pc-canada.com/"
 
-
 class PcCanada:
     def __init__(self, driver):
         self.driver = driver
-        self.promptClass = "Modal"
-        self.closePromptClass = "icon--close"
-        self.shopId = "accessible-megamenu-nav-item-Shop"
-        self.shopLinkText = "Shop"
-        self.brotherLinkText = "Brother Ink + Toner"
-        self.LexmarkLinkText = "Lexmark Ink + Toner"
-        self.canonLinkText = "Canon Ink + Toner"
-        self.samsungLinkText = "Samsung Toner"
-        self.epsonLinkText = "Epson Ink"
-        self.staplesLinkText = "Staples Ink + Toner"
-        self.fuzionLinkText = "Fuzion Ink + Toner"
-        self.xeroxLinkText = "Xerox Ink + Toner"
-        self.hpLinkText = "HP Ink + Toner"
+        self.promptClass = "//*[@id=\"navbarNav\"]/ul/li[3]/a"
+        self.shopproductsselecctor = (By.LINK_TEXT,"Shop Products")
+        self.ink_toner =(By.LINK_TEXT,"Ink & Toner")
 
-    def wait_presence_by_class(self, time, locator):
+    def wait_presence(self, time, locator):
         try:
             WebDriverWait(self.driver, time).until(
-                expected_conditions.presence_of_element_located((By.CLASS_NAME, locator))
+                expected_conditions.presence_of_element_located(locator)
             )
         except:
             self.driver.tearDown()
 
-    def wait_presence_by_id(self, time, locator):
-        try:
-            WebDriverWait(self.driver, time).until(
-                expected_conditions.presence_of_element_located((By.ID, locator))
-            )
-        except:
-            self.driver.tearDown()
+    def get_element(self, locator):
+        self.wait_presence(100,locator)
+        return self.driver.find_element(locator)
 
-    def wait_presence_by_link_text(self, time, locator):
-        try:
-            WebDriverWait(self.driver, time).until(
-                expected_conditions.presence_of_element_located((By.LINK_TEXT, locator))
-            )
-        except:
-            self.driver.tearDown()
+    def click_shop_product(self):
+        self.get_element(self.shopproductsselecctor).click()
+        # self.driver.implicitly_wait(1)
+
+    def click_ink_toner(self):
+        self.get_element(self.ink_toner).click()
+        # self.driver.implicitly_wait(1)
+
 
     def wait_prompt(self):
         self.wait_presence_by_class(15,self.promptClass)
@@ -54,10 +40,6 @@ class PcCanada:
 
     def close_prompt(self):
         self.driver.find_element(By.CLASS_NAME, self.closePromptClass).click()
-
-    def get_shop(self):
-        self.wait_presence_by_id(10, self.shopId)
-        return self.driver.find_element(By.ID, self.shopId)
 
     def click_shop(self):
         self.get_shop().click()
