@@ -1,10 +1,11 @@
 import time
 from src.Driver.WebDriverSetup import WebDriverSetup
+from src.PageObject.Pages.common import Common
 from src.PageObject.Pages.ink.One23InkIndex import One23InkIndex
 from src.db import postgresql
 
 
-class One23InkWorks:
+class One23InkWorks(Common):
 
     def __init__(self):
         self.driver = WebDriverSetup()
@@ -23,8 +24,8 @@ class One23InkWorks:
         while canGoNextPage:
             self.indexPage.wait_until_load()
             products = self.indexPage.get_values_from_page(brand)
-#           insert_to_database(products)
-            self.present_values(products)
+            self.insert_to_database(products)
+            # self.present_values(products)
             canGoNextPage = self.indexPage.click_next_page()
 
     def present_values(self, products):

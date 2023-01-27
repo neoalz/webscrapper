@@ -5,7 +5,7 @@ from src.Driver.WebDriverSetup import WebDriverSetup
 from src.db import postgresql
 table_name = "scrapper_results"
 
-class CommonPage:
+class Common:
 
     def __init__(self):
         self.driver = WebDriverSetup().driver
@@ -33,3 +33,5 @@ class CommonPage:
 
     def insert_to_database(products):
         postgresql.insert_values(table_name, products)
+
+
